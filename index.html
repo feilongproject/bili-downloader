@@ -8,6 +8,10 @@
     <script src="//cdn.staticfile.org/jquery/1.12.3/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/gh/feilongproject/bili-downloader/layer/layer.js"></script>
     <style type="text/css">
+        .downloadbutton {
+            margin: 0px 5px 5px 5px;
+        }
+        
         html {
             line-height: 0.2;
             background-color: #00aaff;
@@ -40,7 +44,7 @@
 
         button {
             text-align: center;
-            margin: 20px 20px;
+            margin: 10px 10px 0px 0px;
             padding: 10px 10px;
             border: 1px solid #cdd;
             border-radius: 20px;
@@ -105,20 +109,22 @@
         <button type="button" onclick="AboutMe()">关于</button>
         <button type="button" onclick="Todo()">TODO</button>
 
-        <hr noshade="noshade"  style="height: 10px;">
+        <hr noshade="noshade" style="height: 10px;">
         <p>
             <input type="text" id="www" placeholder="输入AV/BV号 或 AV/BV视频链接">
             <button onclick="tiaozhuan()" style="margin: auto;">跳转</button>
         </p>
         <script type="text/javascript">
             var tiaozhuan = function () {
-                if(!document.getElementById("www").value)layer.msg('请输入值');
+                if (!document.getElementById("www").value) layer.msg('请输入值');
                 else document.location.href = '/?abid=' + document.getElementById("www").value;
             }
         </script>
     </div>
     <div class="info" id="info">
-        <!--INPAGE-->
+        <div style="margin: 10px 10px ;">
+            <!--INPAGE-->
+        </div>
     </div>
 </body>
 
