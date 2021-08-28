@@ -90,19 +90,24 @@ async function InfoPage(request) {
   //var videoCid = videoInfoJson.data.cid
 
 
-  var infoPage = "<p>视频AV号：" + data.aid + "视频BV号：" + data.bvid + "</p>" +
-    "<p>视频标题：" + data.title + "</p>" +
-    "<p>视频简介：" + data.desc + "</p>" +
-    "<p>视频共有" + data.pages.length + "P     " +
-    "<a href=\""+data.pic+"\">视频封面</a></p>"+
-    "<table style=\"text-align: center;\" border=\"1\">" +
-    "<tr><td></td><td>章节标题</td><td>下载</td><td>cid</td></tr>"
 
 
+ var infoPage = "<table border=\"1\">"+
+"<tr><th>视频信息</th><th>值</th></tr>"+
+"<tr><td>AV号</td><td>"+data.aid+"</td></tr>"+
+"<tr><td>BV号</td><td>"+data.bvid+"</td></tr>"+
+"<tr><td>标题</td><td>"+data.title+"</td></tr>"+
+"<tr><td>简介</td><td><code>"+GetDesc(data.desc)+"</code></td></tr>"+
+"<tr><td>分P</td><td>共"+data.pages.length+"P</td></tr>"+
+"<tr><td>封面</td><td><a href=\""+data.pic+"\">链接</a></td></tr></table><hr>"
+
+
+  var infoPage = infoPage + "<table border=\"1\">"+
+  "<tr><th></th><th>分P标题</th><th>下载页面</th><th>CID</th></tr>"
   for (i = 0; i < data.pages.length; i++) {
     var cid = data.pages[i].cid
     var infoPage = infoPage + "<tr><td>P" + (i + 1) + "</td>" +
-      "<td><code  style=\"background-color:#FFF\">" + data.pages[i].part + "</code></td>" +
+      "<td><code style=\"background-color:#FFF\">" + data.pages[i].part + "</code></td>" +
       "<td><button class=\"downloadbutton\" onclick=\"window.location.href = '/download\?cid=" + cid + "&aid=" + data.aid + "'\">下载</button></td>" +
       "<td>" + cid + "<br></td></tr>"
     //console.log("cid(" + i + "/" + videoInfoJson.data.pages.length + "): " + cid)
@@ -154,6 +159,10 @@ async function DownloadPage() {
 async function PageHeader() {
   page = await fetch("https://raw.githubusercontent.com/feilongproject/bili-downloader/master/index.html")
   return await page.text()
+}
+function GetDesc(desc){
+  console.log(desc)
+  return desc.replaceAll("\n","<br>")
 }
 
 function stristr(haystack, needle, bool) {
