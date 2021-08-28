@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!--<link rel="stylesheet" href="//res.layui.com/layui/dist/css/layui.css?v=351-1" media="all">-->
+    <script src="//cdn.staticfile.org/jquery/1.12.3/jquery.min.js"></script>
+    <script src="/layer/layer.js"></script>
+    <style type="text/css">
+        html {
+            line-height: 0.2;
+            background-color: #00aaff;
+        }
+
+        .header,
+        .info,
+        .howuse,
+        .todo,
+        .tittle {
+            background-color: #0cf;
+            width: auto;
+            margin: auto auto;
+            box-shadow: 0 0 32px 0 #808080;
+            border-radius: 15px;
+        }
+
+        input {
+            margin: 20px 20px;
+            padding: 10px 10px;
+            border: 1px solid #cdd;
+            border-radius: 20px;
+            width: 60%;
+        }
+
+        .header,
+        .tittle {
+            text-align: center;
+        }
+
+        button {
+            text-align: center;
+            margin: 20px 20px;
+            padding: 10px 10px;
+            border: 1px solid #cdd;
+            border-radius: 20px;
+        }
+    </style>
+    <script>
+        function HowToUse() {
+            layer.open({
+                //type: 1,
+                //skin: 'demo-class', //样式类名
+                title: "使用方法",
+                closeBtn: 1, //显示关闭按钮
+                anim: 2,
+                shadeClose: true, //开启遮罩关闭
+                content: `
+                    <p>方法1. 直接在网页将 " bilibili.com " 替换为" bili.gq"</p>
+                    <p>方法2. 在" bili.gq" 后添加 "av、bv号"</p>
+                    <p>方法3. 在" bili.gq" 后添加 "bilibili链接"</p>
+                    <p>方法4. 在下方输入bv av号/av bv链接进行跳转</p>`
+            });
+        };
+        function AboutMe() {
+            layer.open({
+                //type: 1,
+                //skin: 'demo-class', //样式类名
+                title: "关于",
+                closeBtn: 1, //显示关闭按钮
+                anim: 2,
+                shadeClose: true, //开启遮罩关闭
+                content: `
+                    <p>作者 : 飞龙project</p>
+                    <p>GitHub开源项目仓库: <a href="https://github.com/feilongproject/bili-downloader">github.com/feilongproject/bili-downloader</a></p>
+                    <p>demo link1 : <a href="https://www.bilibili.com/video/BV1Ap4y1b7UC">https://www.bilibili.com/video/BV1Ap4y1b7UC</a></p>
+                    <p>demo link2 : <a href="/https://www.bilibili.com/video/BV1Ap4y1b7UC">http://bili.gq/https://www.bilibili.com/video/BV1Ap4y1b7UC</a></p>`
+            });
+        }
+        function Todo() {
+            layer.open({
+                //type: 1,
+                //skin: 'demo-class', //样式类名
+                title: "TODO",
+                closeBtn: 1, //显示关闭按钮
+                anim: 2,
+                shadeClose: true, //开启遮罩关闭
+                content: `
+                    <p>添加番剧下载</p>
+                    <p>添加剧集下载</p>
+                    <p>美化界面(没css真难看)</p>
+                    <p>添加cookie，使能下载更高画质视频</p>`
+            });
+        }
+    </script>
+</head>
+
+<body style="margin: 10% 20% auto 20%;">
+
+    <div class="tittle">
+        <h1 style="padding: 20px;">bilibili视频下载助手</h1>
+    </div>
+    <div class="header" style="text-align: center;">
+        <button type="button" onclick="HowToUse()">使用方法</button>
+        <button type="button" onclick="AboutMe()">关于</button>
+        <button type="button" onclick="Todo()">TODO</button>
+
+        <hr noshade="noshade"  style="height: 10px;">
+        <p>
+            <input type="text" id="www" placeholder="输入AV/BV号 或 AV/BV视频链接">
+            <button onclick="tiaozhuan()" style="margin: auto;">跳转</button>
+        </p>
+        <script type="text/javascript">
+            var tiaozhuan = function () {
+                if(!document.getElementById("www").value)layer.msg('请输入值');
+                else document.location.href = '/?abid=' + document.getElementById("www").value;
+            }
+        </script>
+    </div>
+    <div class="info" id="info">
+        <!--INPAGE-->
+    </div>
+</body>
+
+</html>
