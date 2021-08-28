@@ -26,7 +26,7 @@ async function Main(request) {
   {//init
     url = new URL(request.url)
   }
-  console.log(url)
+  console.log(url.href)
   //return new Response(url.pathname +"   "+ aid)
 
   if (!url.search) {
@@ -41,17 +41,16 @@ async function Main(request) {
 
 async function InfoPage(request) {
   //let aid = url.searchParams.get('aid')
-
   var videoId = url.searchParams.get('abid')
   if (!videoId) {
     videoId = "https:/" + url.pathname
   }
 
   {
-    console.log("videoId->" + videoId)
-    console.log(url)
+    //console.log("videoId->" + videoId)
+    //console.log(url)
 
-    console.log()
+
   }
 
 
@@ -86,18 +85,30 @@ async function InfoPage(request) {
   var res = await fetch(videoApiUrl + videoId)
   //console.log(res)
   var videoInfoJson = await res.json()
-  console.log(videoInfoJson)
+  var data = videoInfoJson.data
+  console.log(data)
   //var videoCid = videoInfoJson.data.cid
 
 
-  var infoPage = ""
-  for (i = 0; i < videoInfoJson.data.pages.length; i++) {
-    var cid = videoInfoJson.data.pages[i].cid
-    var infoPage = infoPage + "目标cid：" + cid + " (" + (i + 1) + "/" + videoInfoJson.data.pages.length + ")"
-      + "<button class=\"downloadbutton\" onclick=\"window.location.href = '/download\?cid=" + cid + "&aid=" + videoInfoJson.data.aid + "'\">跳转到下载详情页</button>"
-      + "<br>"
+  var infoPage = "<p>视频AV号：" + data.aid + "视频BV号：" + data.bvid + "</p>" +
+    "<p>视频标题：" + data.title + "</p>" +
+    "<p>视频简介：" + data.desc + "</p>" +
+    "<p>视频共有" + data.pages.length + "P     " +
+    "<a href=\""+data.pic+"\">视频封面</a></p>"+
+    "<table style=\"text-align: center;\" border=\"1\">" +
+    "<tr><td></td><td>章节标题</td><td>下载</td><td>cid</td></tr>"
+
+
+  for (i = 0; i < data.pages.length; i++) {
+    var cid = data.pages[i].cid
+    var infoPage = infoPage + "<tr><td>P" + (i + 1) + "</td>" +
+      "<td><code  style=\"background-color:#FFF\">" + data.pages[i].part + "</code></td>" +
+      "<td><button class=\"downloadbutton\" onclick=\"window.location.href = '/download\?cid=" + cid + "&aid=" + data.aid + "'\">下载</button></td>" +
+      "<td>" + cid + "<br></td></tr>"
     //console.log("cid(" + i + "/" + videoInfoJson.data.pages.length + "): " + cid)
   }
+  infoPage = infoPage + "</table>"
+
   infoPage = (await PageHeader())
     .replaceAll("<!--INFOPAGE-->", infoPage)
   return new Response(infoPage, { headers: htmlHeaders })
@@ -143,8 +154,8 @@ async function DownloadPage() {
 async function PageHeader() {
   page = await fetch("https://raw.githubusercontent.com/feilongproject/bili-downloader/master/index.html")
   return await page.text()
-
 }
+
 function stristr(haystack, needle, bool) {
   let pos = 0
   haystack += ''
