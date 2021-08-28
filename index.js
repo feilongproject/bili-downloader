@@ -92,27 +92,29 @@ async function InfoPage(request) {
 
 
 
- var infoPage = "<table border=\"1\">"+
-"<tr><th>视频信息</th><th>值</th></tr>"+
-"<tr><td>AV号</td><td>"+data.aid+"</td></tr>"+
-"<tr><td>BV号</td><td>"+data.bvid+"</td></tr>"+
-"<tr><td>标题</td><td>"+data.title+"</td></tr>"+
-"<tr><td>简介</td><td><code>"+GetDesc(data.desc)+"</code></td></tr>"+
-"<tr><td>分P</td><td>共"+data.pages.length+"P</td></tr>"+
-"<tr><td>封面</td><td><a href=\""+data.pic+"\">链接</a></td></tr></table><hr>"
+  var infoPage = "<span style=\"line-height: 100%;margin: 10px;\"><div style=\"margin: 10px 10px;\">" +
+    "<table border=\"1\">" +
+    "<tr><th>视频信息</th><th>值</th></tr>" +
+    "<tr><td>AV号</td><td>" + data.aid + "</td></tr>" +
+    "<tr><td>BV号</td><td>" + data.bvid + "</td></tr>" +
+    "<tr><td>标题</td><td>" + data.title + "</td></tr>" +
+    "<tr><td>简介</td><td>" + GetDesc(data.desc) + "</td></tr>" +
+    "<tr><td>分P</td><td>共" + data.pages.length + "P</td></tr>" +
+    "<tr><td>封面</td><td><a href=\"" + data.pic + "\">链接</a></td></tr></table>" +
+    "<hr>"
 
 
-  var infoPage = infoPage + "<table border=\"1\">"+
-  "<tr><th></th><th>分P标题</th><th>下载页面</th><th>CID</th></tr>"
+  var infoPage = infoPage + "<table border=\"1\">" +
+    "<tr><th></th><th>分P标题</th><th>点击下载</th><th>CID</th></tr>"
   for (i = 0; i < data.pages.length; i++) {
     var cid = data.pages[i].cid
     var infoPage = infoPage + "<tr><td>P" + (i + 1) + "</td>" +
-      "<td><code style=\"background-color:#FFF\">" + data.pages[i].part + "</code></td>" +
-      "<td><button class=\"downloadbutton\" onclick=\"window.location.href = '/download\?cid=" + cid + "&aid=" + data.aid + "'\">下载</button></td>" +
+      "<td>" + data.pages[i].part + "</td>" +
+      "<td style=\"border-radius:10px;color:#00F;background-color: #fff;text-align: center;\" onclick=\"window.location.href = '/download\?cid=" + cid + "&aid=" + data.aid + "'\">下载</td>" +
       "<td>" + cid + "<br></td></tr>"
     //console.log("cid(" + i + "/" + videoInfoJson.data.pages.length + "): " + cid)
   }
-  infoPage = infoPage + "</table>"
+  infoPage = infoPage + "</table></div></span>"
 
   infoPage = (await PageHeader())
     .replaceAll("<!--INFOPAGE-->", infoPage)
@@ -134,20 +136,24 @@ async function DownloadPage() {
   console.log(videoDownloadJson)
   var infoPage = ""
   infoPage = infoPage +
-    "当前页面cid: " + cid + "<br>" +
-    "当前最高画质: " + videoDownloadJson.data.format + "<br>"
+    "<span style=\"line-height: 100%;margin: 10px;\">" +
+    "<div style=\"margin: 10px;\">" +
+    "<p>当前页面cid: " + cid + "</p>" +
+    "<p>当前最高画质: " + videoDownloadJson.data.format + "</p>"
   /*for(i=0;i<videoDownloadJson.data.accept_description.length;i++){
     infoPage+=videoDownloadJson.data.accept_description[i]+"<br>"
   }*/
 
+
+
   for (i = 0; i < videoDownloadJson.data.durl.length; i++) {
     console.log(i + "  " + videoDownloadJson.data.durl.length + "  " + videoDownloadJson.data.durl[i])
     infoPage +=
-      "<a href=" + videoDownloadJson.data.durl[i].url + ">画质:"
+      "<p><a href=" + videoDownloadJson.data.durl[i].url + ">画质:"
       + videoDownloadJson.data.format +
-      "</a><br>"
+      "</a></p>"
   }
-
+  infoPage = infoPage + "</div></span>"
 
 
   infoPage = (await PageHeader())
@@ -160,9 +166,9 @@ async function PageHeader() {
   page = await fetch("https://raw.githubusercontent.com/feilongproject/bili-downloader/master/index.html")
   return await page.text()
 }
-function GetDesc(desc){
+function GetDesc(desc) {
   console.log(desc)
-  return desc.replaceAll("\n","<br>")
+  return desc.replaceAll("\n", "<br>")
 }
 
 function stristr(haystack, needle, bool) {
