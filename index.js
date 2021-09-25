@@ -65,8 +65,8 @@ async function InfoPage(request) {
   if (stristr(videoId, "av") || stristr(videoId, "bv")) {//检测是否是av类视频
     //console.log(videoId.split("/"))
     console.log(videoId)
-    if (stristr(videoId, "av")) videoId = "aid=" + videoId.substr(2)
-    else videoId = "bvid=" + videoId
+    if (stristr(videoId, "bv")) videoId = "bvid=" + videoId
+    else videoId = "aid=" + videoId.substr(2)
   } else if (stristr(videoId, "ss") || stristr(videoId, "ep")) {//检测是否是ss类视频
   }/*
   else if (stristr($videoId, "md")) {//检测是否是md类视频
