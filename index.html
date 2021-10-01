@@ -68,9 +68,7 @@
                 shadeClose: true, //开启遮罩关闭
                 content: `
                     <p>方法1. 直接在网页将 " bilibili.com " 替换为" bili.gq"</p>
-                    <p>方法2. 在" bili.gq" 后添加 "av、bv号"</p>
-                    <p>方法3. 在" bili.gq" 后添加 "bilibili链接"</p>
-                    <p>方法4. 在下方输入bv av号/av bv链接进行跳转</p>`
+                    <p>方法2. 在输入框中输入bv/av/ss/ep号进行跳转</p>`
             });
         };
         function AboutMe() {
@@ -84,8 +82,8 @@
                 content: `
                     <p>作者 : 飞龙project</p>
                     <p>GitHub开源项目仓库: <a href="https://github.com/feilongproject/bili-downloader">github.com/feilongproject/bili-downloader</a></p>
-                    <p>demo link1 : <a href="https://www.bilibili.com/video/BV1Ap4y1b7UC">https://www.bilibili.com/video/BV1Ap4y1b7UC</a></p>
-                    <p>demo link2 : <a href="/https://www.bilibili.com/video/BV1Ap4y1b7UC">http://bili.gq/https://www.bilibili.com/video/BV1Ap4y1b7UC</a></p>`
+                    <p>demo link1 : <a href="http://bili.gq/bangumi/bangumi/play/ep410633">http://bili.gq/bangumi/bangumi/play/ep410633</a></p>
+                    <p>demo link2 : <a href="http://bili.gq/video/BV1Ap4y1b7UC">http://bili.gq/video/BV1Ap4y1b7UC</a></p>`
             });
         }
         function Todo() {
@@ -97,9 +95,8 @@
                 anim: 2,
                 shadeClose: true, //开启遮罩关闭
                 content: `
-                    <p>添加番剧下载</p>
                     <p>添加剧集下载</p>
-                    <p>美化界面(没css真难看)</p>
+                    <p>美化界面(样式还没统一)</p>
                     <p>添加cookie，使能下载更高画质视频</p>`
             });
         }
@@ -122,7 +119,7 @@
                 <input name="video_choice" type="radio" checked>视频</input>
                 <input name="video_choice" type="radio">番剧</input>
             </form>
-            <input class="input" type="text" id="www" placeholder="输入AV/BV号 或 AV/BV视频链接" />
+            <input class="input" type="text" id="www" placeholder="输入AV/BV/EP/SS号" />
             <input  type=button value=跳转 onclick="tiaozhuan()" />
         </p>
         <script type="text/javascript">
