@@ -11,7 +11,7 @@
     http://bili.gq/download?cid=328118259&aid=972692871
 
 */
-const cookies = "SESSDATA=123"
+const cookies = ""//"SESSDATA=123"
 var url
 var pageStatus
 
