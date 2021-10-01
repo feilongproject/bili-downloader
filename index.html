@@ -33,7 +33,7 @@
             border-radius: 15px;
         }
 
-        input {
+        .input {
             margin: 20px 20px;
             padding: 10px 10px;
             border: 1px solid #cdd;
@@ -55,6 +55,9 @@
         }
     </style>
     <script>
+		console.log("欢迎使用bilibili视频下载助手")
+		console.log("%c 作者 -> 飞龙project ", "background:#000; color:#fff");
+		console.log("%c GitHub -> https://github.com/feilongproject/bili-downloader ", "background:#000; color:#fff");
         function HowToUse() {
             layer.open({
                 //type: 1,
@@ -115,13 +118,25 @@
 
         <hr noshade="noshade" style="height: 10px;">
         <p>
-            <input type="text" id="www" placeholder="输入AV/BV号 或 AV/BV视频链接">
-            <button onclick="tiaozhuan()" style="margin: auto;">跳转</button>
+            <form name=fr>
+                <input name="video_choice" type="radio" checked>视频</input>
+                <input name="video_choice" type="radio">番剧</input>
+            </form>
+            <input class="input" type="text" id="www" placeholder="输入AV/BV号 或 AV/BV视频链接" />
+            <input  type=button value=跳转 onclick="tiaozhuan()" />
         </p>
         <script type="text/javascript">
             var tiaozhuan = function () {
                 if (!document.getElementById("www").value) layer.msg('请输入值');
-                else document.location.href = '/?abid=' + document.getElementById("www").value;
+                
+                else if(document.getElementsByName("video_choice")[0].checked){
+					console.log("video: "+document.getElementById("www").value)
+					document.location.href = '//bili.gq/video/' + document.getElementById("www").value;
+				}else{
+					console.log("bangumi: "+document.getElementById("www").value)
+					document.location.href = '//bili.gq/bangumi/' + document.getElementById("www").value;
+				}
+					
             }
         </script>
     </div>
