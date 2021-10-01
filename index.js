@@ -44,7 +44,8 @@ async function GetInfoPage_Video(url) {
   for (i = url.split("/").length - 1; i >= 1; i--) {//把videoId彻底分割成avbv格式
     console.log("--" + url.split("/")[i])
     if (stristr(url.split("/")[i], "av") || stristr(url.split("/")[i], "bv"))
-      videoId = url.split("/")[i]}
+      videoId = url.split("/")[i]
+  }
   if (stristr(videoId, "bv")) {
     videoId = "bvid=" + videoId
   } else {
@@ -73,7 +74,8 @@ async function GetInfoPage_Video(url) {
     var infoPage = infoPage + "<tr><td>P" + (i + 1) + "</td>" +
       "<td>" + data.pages[i].part + "</td>" +
       "<td style=\"border-radius:10px;color:#00F;background-color: #fff;text-align: center;\" onclick=\"window.location.href = '/download\?type=0&cid=" + cid + "&aid=" + data.aid + "'\">下载</td>" +
-      "<td>" + cid + "<br></td></tr>"}
+      "<td>" + cid + "<br></td></tr>"
+  }
   infoPage = infoPage + "</table></div></span>"
   infoPage = (await PageHeader())
     .replaceAll("<!--INFOPAGE-->", infoPage)
@@ -87,7 +89,8 @@ async function GetInfoPage_Video(url) {
 async function GetInfoPage_Bangumi(url) {
   for (i = url.split("/").length - 1; i >= 1; i--) {
     if (stristr(url.split("/")[i], "ep") || stristr(url.split("/")[i], "ss"))
-      videoId = url.split("/")[i]}
+      videoId = url.split("/")[i]
+  }
   if (stristr(videoId, "ep"))
     videoId = "ep_id=" + videoId.substr(2)
   else
@@ -232,5 +235,23 @@ function stristr(haystack, needle, bool) {
 }
 
 addEventListener("fetch", async event => {
-  event.respondWith(Main(event.request))
+  event.respondWith(Main(event.request).catch(err => {
+    var message=
+    "<body style=\"background-color:#0af;\">"+
+    "<a href=\"https:\\bili.gq\">回到首页</a>" +
+    "<h1>发生了一些错误</h1>"+
+    "这可能是因为：<pre>"+
+    "1. 错误的视频链接\n"+
+    "2. 服务器响应出错</pre>"+
+    "<br>如果您不知道发生了什么，请将页面URL：<pre>"+event.request.url+" </pre>与下方错误信息(可选)发送至 1728904631@qq.com"+
+    "<pre>\n"
+    message += (err.reason || err.stack || 'Unknown Error')+"</pre>"
+
+    return new Response(message, {
+      status: err.status || 500,
+      statusText: err.statusText || null,
+      headers: htmlHeaders
+    })
+  })
+  )
 })
