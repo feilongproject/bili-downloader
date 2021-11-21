@@ -73,7 +73,7 @@ async function GetInfoPage_Video(url) {
     var cid = data.pages[i].cid
     var infoPage = infoPage + "<tr><td>P" + (i + 1) + "</td>" +
       "<td>" + data.pages[i].part + "</td>" +
-      "<td style=\"border-radius:10px;color:#00F;background-color: #fff;text-align: center;\" onclick=\"window.location.href = '/download\?type=0&cid=" + cid + "&aid=" + data.aid + "'\">下载</td>" +
+      "<td style=\"border-radius:10px;color:#00F;background-color: #fff;text-align: center;\"><a target=\"_blank\" href = \"/download\?type=0&cid=" + cid + "&aid=" + data.aid + "\">下载</a></td>" +
       "<td>" + cid + "<br></td></tr>"
   }
   infoPage = infoPage + "</table></div></span>"
@@ -121,7 +121,7 @@ async function GetInfoPage_Bangumi(url) {
     var infoPage = infoPage +
       "<tr><td>P" + (i + 1) + "</td>" +
       "<td>" + data.episodes[i].long_title + "</td>" +
-      "<td style=\"border-radius:10px;color:#00F;background-color: #fff;text-align: center;\" onclick=\"window.location.href = '/download\?type=1&cid=" + cid + "&aid=" + data.episodes[i].aid + "'\">下载</td>" +
+      "<td style=\"border-radius:10px;color:#00F;background-color: #fff;text-align: center;\"><a target=\"_blank\" href = \"/download\?type=0&cid=" + cid + "&aid=" + data.episodes[i].aid + "\">下载</td>" +
       "<td>" + cid + "<br></td></tr>"
   }
   infoPage = infoPage + "</table></div></span>"
