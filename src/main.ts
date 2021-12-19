@@ -10,7 +10,7 @@ async function Main(request: Request) {
     const pathPart = pathname.split("/")
     console.log(`\npath part: ${pathPart}`)
 
-    var pattern = /(av)\d*|(bv)\w*|(ss)\d*|(ep)\d*/i
+    var pattern = /(av)\d{1,}|(bv)\w*|(ss)\d{1,}|(ep)\d{1,}/i
     var exp = pattern.exec(pathname)
     var params = requestURL.searchParams.get("id")
     console.log(`pathname exp: ${exp}\nparams: ${params}`)
