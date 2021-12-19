@@ -6,52 +6,38 @@ async function Main(request: Request) {
 
     console.log(`request url: ${request.url}`)
     const requestURL = new URL(request.url)
+    var { pathname } = requestURL
+    const pathPart = pathname.split("/")
+    console.log(`\npath part: ${pathPart}`)
 
-    const path = (requestURL.pathname + "/").replaceAll("//", "/").split("/")
-    const Path = [path[1], path[2], path[3]]
+    var pattern = /(av)\d*|(bv)\w*|(ss)\d*|(ep)\d*/i
+    var exp = pattern.exec(pathname)
+    var params = requestURL.searchParams.get("id")
+    console.log(`pathname exp: ${exp}\nparams: ${params}`)
 
-    console.log(`\npath0: ${Path[0]}\npath1: ${Path[1]}\npath2: ${Path[2]}\npath3: ${Path[3]}`)
+    if (exp || params) {
+        console.log(`page: info`)
+        if (exp) return await PageInfo(exp[0])
+        if (params) {
+            var exp = pattern.exec(params)
+            console.log(`params exp: ${exp}`)
+            if (exp) return await PageInfo(exp[0])
+        }
+        return new Response(PageIndex, { headers: htmlHeaders })
+    } else if (pathPart[1] == "download") {
+        console.log(`page: download`)
 
-    switch (Path[0]) {
-        case "info":
-            console.log(`page: info`)
-
-            var VideoInfo = requestURL.searchParams.get("id")
-            var videoId
-
-            if (VideoInfo?.includes("bilibili.com")) {
-                var VideoCut = VideoInfo.split("/")
-                for (var i = 0; i < VideoCut.length; i++)
-                    if (VideoCut[i].toLowerCase().includes("av") ||
-                        VideoCut[i].toLowerCase().includes("bv") ||
-                        VideoCut[i].toLowerCase().includes("ss") ||
-                        VideoCut[i].toLowerCase().includes("ep")
-                    ) videoId = VideoCut[i]
-            } else if (VideoInfo?.toLowerCase().startsWith("av") ||
-                VideoInfo?.toLowerCase().startsWith("bv") ||
-                VideoInfo?.toLowerCase().startsWith("ss") ||
-                VideoInfo?.toLowerCase().startsWith("ep")
-            ) videoId = VideoInfo
-
-            if (!VideoInfo || !videoId)
-                return new Response(PageIndex, { headers: htmlHeaders })
-
-            return await PageInfo(videoId)
-        case "download":
-            console.log(`page: download`)
-
-            var cid = requestURL.searchParams.get('cid')
-            var aid = requestURL.searchParams.get('aid')
-            var type = requestURL.searchParams.get('type')
-            var dash = (requestURL.searchParams.get('dash') == "0") || (!requestURL.searchParams.get('dash')) ? false : true
-            if (!cid || !aid || !type) return new Response(PageIndex, { headers: htmlHeaders })
-            console.log(`\nPageDownload:\ncid: ${cid}\naid: ${aid}\ntype: ${type}\ndash: ${dash}`)
-            return PageDownload(parseInt(cid), parseInt(aid), parseInt(type), dash)
-        default:
-            console.log(`page: default`)
-            return new Response(PageIndex, { headers: htmlHeaders })
+        var cid = requestURL.searchParams.get('cid')
+        var aid = requestURL.searchParams.get('aid')
+        var type = requestURL.searchParams.get('type')
+        var dash = (requestURL.searchParams.get('dash') == "0") || (!requestURL.searchParams.get('dash')) ? false : true
+        if (!cid || !aid || !type) return new Response(PageIndex, { headers: htmlHeaders })
+        console.log(`\nPageDownload:\ncid: ${cid}\naid: ${aid}\ntype: ${type}\ndash: ${dash}`)
+        return PageDownload(parseInt(cid), parseInt(aid), parseInt(type), dash)
+    } else {
+        console.log(`page: default`)
+        return new Response(PageIndex, { headers: htmlHeaders })
     }
-
 }
 
 addEventListener("fetch", async event => {
