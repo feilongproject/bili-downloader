@@ -1,37 +1,76 @@
 import { PageIndex, htmlHeaders, cookieHeaders } from '../../var'
+import { GetDashPage } from './GetDash'
+import { GetFlvPage } from './GetFlv'
 
 
-export async function PageDownloadVideo(cid: number, aid: number, dash: boolean): Promise<Response> {
+export async function PageDownloadVideo(cid: number, aid: number, dash: boolean, qn: number): Promise<Response> {
 
-    console.log(`aid: ${aid}\ncid: ${cid}`)
-    var videoApiUrl = `https://bilibili.myhosts.ml/x/player/playurl?avid=${aid}&cid=${cid}`
+    var params
+    if (dash) params = `?avid=${aid}&cid=${cid}&fnval=16&fnver=0`
+    else params = `?avid=${aid}&cid=${cid}&fnval=0&fnver=0&qn=${qn}`
+    var videoApiUrl = `https://api.bilibili.com/x/player/playurl${params}`
+
     console.log(`fetching url: ${videoApiUrl}`)
 
-    var videoDownloadJson = await fetch(videoApiUrl, {
+    var videoJson = await fetch(videoApiUrl, {
         headers: cookieHeaders
     }).then(res => {
         return res.text()
     }).then(res => {
-        //console.log(res)
-        return JSON.parse(res)
+        console.log(res)
+        return JSON.parse(res).data
     })
 
-    console.log(videoDownloadJson)
+    console.log(videoJson)
+
     var infoPage = `
         <span style="line-height: 100%;margin: 10px;">
-        <div style="margin: 10px;">
-        <p>当前页面cid: ${cid}</p>
-        <p>当前最高画质: ${videoDownloadJson.data.format}</p>
+            <div style="margin: 10px;">
+                <p>当前页面cid: ${cid}, aid: ${aid}</p>
+                <p>当前视频格式: ${videoJson.format}${videoJson.format == "FLV" ? `(bilibili已对当前下载格式进行速度限制)` : `当前格式会出现音视频分离现象，请谨慎下载`}</p>
+        `
+
+    var VideoSupportFormatsPage = `
+        <table border="1">
+            <tr>
+                <th>支持画质</th>
+                <th>是否需要登录</th>
+                <th>是否需要vip</th>
+            </tr>
+        `
+    for (var i = 0; i < videoJson.support_formats.length; i++) {
+        var SupportFormat = videoJson.support_formats[i]
+        //console.log(SupportFormat)
+        if ((SupportFormat.quality == videoJson.quality) && (videoJson.type != "DASH")) VideoSupportFormatsPage += `
+                        <tr>
+                            <td><a href="/download?type=0&cid=${cid}&aid=${aid}&dash=0&qn=${SupportFormat.quality}"><b>${SupportFormat.new_description}<b></a></td>
+                            <td>${SupportFormat.need_login == true ? "是" : "否"}</td>
+                            <td>${SupportFormat.need_vip == true ? "是" : "否"}</td>
+                        </tr>`
+        else if (videoJson.type != "DASH") VideoSupportFormatsPage += `
+            <tr>
+                <td><a href="/download?type=0&cid=${cid}&aid=${aid}&dash=0&qn=${SupportFormat.quality}">${SupportFormat.new_description}</a></td>
+                <td>${SupportFormat.need_login == true ? "是" : "否"}</td>
+                <td>${SupportFormat.need_vip == true ? "是" : "否"}</td>
+            </tr>`
+        else VideoSupportFormatsPage += `
+                        <tr>
+                            <td>${SupportFormat.new_description}</td>
+                            <td>${SupportFormat.need_login == true ? "是" : "否"}</td>
+                            <td>${SupportFormat.need_vip == true ? "是" : "否"}</td>
+                        </tr>`
+    }
+    infoPage += VideoSupportFormatsPage + `
+                    </table>
         `
 
 
-    for (var i = 0; i < videoDownloadJson.data.durl.length; i++) {
-        console.log(i + "  " + videoDownloadJson.data.durl.length + "  " + videoDownloadJson.data.durl[i])
-        infoPage +=
-            "<p><a href=" + videoDownloadJson.data.durl[i].url + ">画质:"
-            + videoDownloadJson.data.format +
-            "</a></p>"
-    }
+
+    if (dash)
+        infoPage += GetDashPage(videoJson.dash)
+    else
+        infoPage += GetFlvPage(videoJson.durl)
+
     infoPage = infoPage + "</div></span>"
 
 

@@ -31,9 +31,12 @@ async function Main(request: Request) {
         var aid = requestURL.searchParams.get('aid')
         var type = requestURL.searchParams.get('type')
         var dash = (requestURL.searchParams.get('dash') == "0") || (!requestURL.searchParams.get('dash')) ? false : true
+        var qnn = requestURL.searchParams.get('qn'), qn: number
+        if (!qnn) qn = 80
+        else qn = parseInt(qnn)
         if (!cid || !aid || !type) return new Response(PageIndex, { headers: htmlHeaders })
-        console.log(`\nPageDownload:\ncid: ${cid}\naid: ${aid}\ntype: ${type}\ndash: ${dash}`)
-        return PageDownload(parseInt(cid), parseInt(aid), parseInt(type), dash)
+        console.log(`\nPageDownload:\ncid=${cid}\naid=${aid}\ntype=${type}\ndash=${dash}\nqn=${qn}`)
+        return PageDownload(parseInt(cid), parseInt(aid), parseInt(type), dash, qn)
     } else {
         console.log(`page: default`)
         return new Response(PageIndex, { headers: htmlHeaders })
