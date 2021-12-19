@@ -1,6 +1,4 @@
 export function GetDashPage(dashs: dash) {
-    
-
     //console.log(JSON.stringify(dashs))
     const dashVideo = dashs.video
     const dashAudio = dashs.audio
@@ -41,6 +39,14 @@ export function GetDashPage(dashs: dash) {
                 <!--<td>${VideoInfo.SegmentBase.Initialization}<br><br>${VideoInfo.SegmentBase.indexRange}</td>-->
                 <!--<td>${VideoInfo.codecid}</td>-->
             </tr>`
+        if (VideoInfo.backupUrl)
+            for (var j = 0; j < VideoInfo.backupUrl.length; i++) {
+                page += `
+            <tr>
+                <td>备份源</td>
+                <td><a href="${VideoInfo.backupUrl[j]}">url</a></td>
+            </tr>`
+            }
     }
     page += `
         </table>
@@ -67,6 +73,15 @@ export function GetDashPage(dashs: dash) {
                 <td>${AudioInfo.codecs}</td>
                 <!--<td>${AudioInfo.SegmentBase.Initialization}<br><br>${AudioInfo.SegmentBase.indexRange}</td>-->
             </tr>`
+        if (AudioInfo.backupUrl)
+            for (var j = 0; j < AudioInfo.backupUrl.length; i++) {
+                page += `
+            <tr>
+                <td>备份源</td>
+                <td><a href="${AudioInfo.backupUrl[j]}">url</a></td>
+            </tr>`
+
+            }
     }
 
     page += `
