@@ -39,8 +39,8 @@ export function GetDashPage(dashs: dash) {
                 <!--<td>${VideoInfo.SegmentBase.Initialization}<br><br>${VideoInfo.SegmentBase.indexRange}</td>-->
                 <!--<td>${VideoInfo.codecid}</td>-->
             </tr>`
-        if (VideoInfo.backupUrl)
-            for (var j = 0; j < VideoInfo.backupUrl.length; i++) {
+        if (VideoInfo.backupUrl.length > 0)
+            for (var j = 0; j < VideoInfo.backupUrl.length; j++) {
                 page += `
             <tr>
                 <td>备份源</td>
@@ -73,8 +73,8 @@ export function GetDashPage(dashs: dash) {
                 <td>${AudioInfo.codecs}</td>
                 <!--<td>${AudioInfo.SegmentBase.Initialization}<br><br>${AudioInfo.SegmentBase.indexRange}</td>-->
             </tr>`
-        if (AudioInfo.backupUrl)
-            for (var j = 0; j < AudioInfo.backupUrl.length; i++) {
+        if (AudioInfo.backupUrl.length > 0)
+            for (var j = 0; j < AudioInfo.backupUrl.length; j++) {
                 page += `
             <tr>
                 <td>备份源</td>

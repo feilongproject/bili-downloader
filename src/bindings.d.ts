@@ -17,10 +17,10 @@ interface dash {
         "start_with_sap": number,
         "bandwidth": number,
         "sar": string
-        "backupUrl": [],
+        "backupUrl": string[],
+        "backup_url": string[],
         "codecs": string
         "base_url": string
-        "backup_url": [],
         "segment_base": {
             "initialization": string
             "index_range": string
@@ -47,10 +47,10 @@ interface dash {
         "start_with_sap": number
         "bandwidth": number
         "sar": string
-        "backupUrl": [],
+        "backupUrl": string[],
+        "backup_url": string[],
         "codecs": string
         "base_url": string
-        "backup_url": [],
         "segment_base": {
             "initialization": string
             "index_range": string
