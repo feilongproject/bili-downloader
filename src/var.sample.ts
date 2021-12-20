@@ -80,10 +80,10 @@ export var PageIndex = `
                 shadeClose: true, //开启遮罩关闭
                 content: \`
                     <p>方法1. 直接在网页将 " bilibili.com " 替换为" bili.gq"</p>
-                    <p>方法2. 在输入框中输入bv/av/ss/ep号进行跳转</p>
+                    <p>方法2. 在输入框中输入bv/av/ss/ep/md号进行跳转</p>
                     <p>其中允许的链接格式有：</p>
-                    <li>1. 网页链接中含有视频标识符的（如bv*，av*，ss*，ep*）</li>
-                    <li>2. 网页链接中查询字符id中含有视频标识符的（如?id=bv*，?id=av*，?id=ss*，?id=ep*）</li>
+                    <li>1. 网页链接中含有视频标识符的（如bv*，av*，ss*，ep*，md*）</li>
+                    <li>2. 网页链接中查询字符id中含有视频标识符的（如?id=bv*，?id=av*，?id=ss*，?id=ep*，?id=md*）</li>
                     \`
             });
         };
@@ -110,7 +110,6 @@ export var PageIndex = `
                 anim: 2,
                 shadeClose: true, //开启遮罩关闭
                 content: \`
-                    <p>添加剧集下载</p>
                     <p>美化界面(样式还没统一)</p>
                     <p>添加cookie，使能下载更高画质视频（更高画质视频可以通过dash模式下载，但会导致音视频分离）</p>\`
             });
@@ -157,7 +156,7 @@ export var PageIndex = `
             <form name=fr>
                 <input name="video_choice" type="radio" checked>视频</input>
             </form>
-            <input class="input" type="text" id="www" placeholder="输入AV/BV/EP/SS号" />
+            <input class="input" type="text" id="www" placeholder="输入AV/BV/EP/SS/MD号或视频链接" />
             <input  type=button value=跳转 onclick="tiaozhuan()" />
         </p>
         <script type="text/javascript">

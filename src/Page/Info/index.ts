@@ -11,7 +11,7 @@ export async function PageInfo(videoId: string): Promise<Response> {
 
     if (videoId.toLowerCase().startsWith("av") || videoId.toLowerCase().startsWith("bv")) {
         return PageInfoVideo(videoId)
-    } else if (videoId.toLowerCase().startsWith("ss") || videoId.toLowerCase().startsWith("ep")) {
+    } else if (videoId.toLowerCase().startsWith("ss") || videoId.toLowerCase().startsWith("ep") || videoId.toLowerCase().startsWith("md")) {
         return PageInfoBangumi(videoId)
     } else return new Response(PageIndex, { headers: htmlHeaders })
 

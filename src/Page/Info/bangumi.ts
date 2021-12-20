@@ -9,6 +9,12 @@ export async function PageInfoBangumi(videoId: string): Promise<Response> {
         videoApiUrl += `season_id=${videoId.substr(2)}`
     } else if (videoId.toLowerCase().startsWith("ep")) {
         videoApiUrl += `ep_id=${videoId.substr(2)}`
+    } else if (videoId.toLowerCase().startsWith("md")) {
+        await fetch(`http://api.bilibili.com/pgc/review/user?media_id=${videoId.substr(2)}`).then(res => {
+            return res.text()
+        }).then(res => {
+            videoApiUrl += `season_id=${JSON.parse(res).result.media.season_id}`
+        })
     }
     console.log(`fetching url: ${videoApiUrl}`)
 
@@ -39,7 +45,7 @@ export async function PageInfoBangumi(videoId: string): Promise<Response> {
     var epData = videoInfoJson.episodes
     for (var i = 0; i < epData.length; i++) {
         var cid = epData[i].cid
-        var aid=epData[i].aid
+        var aid = epData[i].aid
         infoPage += `
                 <tr>
                     <td>P${i + 1}</td>

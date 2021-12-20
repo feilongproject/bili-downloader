@@ -10,17 +10,17 @@ async function Main(request: Request) {
     const pathPart = pathname.split("/")
     console.log(`\npath part: ${pathPart}`)
 
-    var pattern = /(av)\d{1,}|(bv)\w*|(ss)\d{1,}|(ep)\d{1,}/i
+    var pattern = /(av)\d{1,}|(bv)\w*|(ss)\d{1,}|(ep)\d{1,}|(md)\d{1,}/i
     var exp = pattern.exec(pathname)
     var params = requestURL.searchParams.get("id")
-    console.log(`pathname exp: ${exp}\nparams: ${params}`)
+    console.log(`pathname:${pathname}->exp: ${exp}`)
 
     if (exp || params) {
         console.log(`page: info`)
         if (exp) return await PageInfo(exp[0])
         if (params) {
             var exp = pattern.exec(params)
-            console.log(`params exp: ${exp}`)
+            console.log(`params: ${params}->exp: ${exp}`)
             if (exp) return await PageInfo(exp[0])
         }
         return new Response(PageIndex, { headers: htmlHeaders })
