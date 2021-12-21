@@ -1,10 +1,11 @@
 export function GetFlvPage(durls: durls[]) {
-    var Page = ""
+    var page = ""
 
+    //console.log(JSON.stringify(durls))
     for (var i = 0; i < durls.length; i++) {
         var DurlInfo = durls[i]
         console.log(`${i} ${durls.length} ${DurlInfo}`)
-        Page +=
+        page +=
             `<p>
             <p>序号: ${DurlInfo.order}</p>
             <p>长度: ${DurlInfo.length}ms</p>
@@ -13,5 +14,11 @@ export function GetFlvPage(durls: durls[]) {
         </p>`
     }
 
-    return Page
+    page += `
+    </table>
+    <details>
+        <summary>flv json</summary>
+        ${JSON.stringify(durls)}
+    </details>`
+    return page
 }
