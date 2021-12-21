@@ -15,20 +15,50 @@ export async function PageDownloadBangumi(cid: number, aid: number, dash: boolea
     var params
     if (dash) params = `?avid=${aid}&cid=${cid}&fnval=16&fnver=0`
     else params = `?avid=${aid}&cid=${cid}&fnval=0&fnver=0&qn=${qn}`
+    var videoApiUrls = new Array
+    videoApiUrls.push(`https://bili.lli.cx/pgc/player/web/playurl/${params}`)
+    videoApiUrls.push(`https://mysr.ellpew.xyz/pgc/player/web/playurl/${params}`)
+    videoApiUrls.push(`https://bilibili.myhosts.ml/pgc/player/web/playurl/${params}}`)
 
-    var videoApiUrl1 = `https://bili.lli.cx/pgc/player/web/playurl/${params}`
-    var videoApiUrl2 = `https://mysr.ellpew.xyz/pgc/player/web/playurl/${params}`
-    var videoApiUrl3 = `https://bilibili.myhosts.ml/pgc/player/web/playurl/${params}`
-
-    var P1 = fetch(videoApiUrl1)
-    var P2 = fetch(videoApiUrl2)
-    var P3 = fetch(videoApiUrl3)
+    var P1 = fetch(videoApiUrls[0], { headers: cookieHeaders })
+    var P2 = fetch(videoApiUrls[1], { headers: cookieHeaders })
+    var P3 = fetch(videoApiUrls[2], { headers: cookieHeaders })
 
     var videoJson = await Promise.all([P1, P2, P3]).then(async res => {
-        return [await res[0].text(), await res[1].text(), await res[2].text(),]
+        var ret = []
+        for (var i = 0; i < res.length; i++) {
+            var body = await res[i].text()
+            ret.push(body)
+        }
+        if (!ret[0]) throw new Error(`未从api获得任何信息！ret: ${ret}`);
+        return ret
     }).then(text => {
-        return [JSON.parse(text[0]), JSON.parse(text[1]), JSON.parse(text[2]),]
-    }).then(res => {
+        var ret: any
+        var err = new Array
+        for (var i = 0; i < text.length; i++) {
+            try {
+                ret.push(JSON.parse(text[i]))
+                console.log(`\nerror0: ${text[i]}`)
+            } catch (error) {
+                err.push({ err: error, info: text[i] });
+                console.log(`${i}->err url: ${videoApiUrls[i]}\nerror: ${error}\nerror: ${text[i]}`)
+            }
+        }
+        //console.log(JSON.stringify(ret))
+        return { ret, err }
+    }).then(ret => {
+        console.log(`ret: ${JSON.stringify(ret)}`)
+
+        var res = ret.ret, err = ret.err
+        if (ret.err) {
+            var errInfo = ""
+            for (var i = 0; i < err.length; i++)
+                errInfo += `no.${i}\nerr url: ${videoApiUrls[i]}\nerror info: ${err[0].info}\n\n<hr>`
+            throw new Error(errInfo);
+        }
+        else res = ret.ret
+        console.log(res)
+
         //console.log(`result: ${JSON.stringify(res[0].result)}`)
         //console.log(`result: ${JSON.stringify(res[1].result)}`)
         //console.log(`result: ${JSON.stringify(res[2].result)}`)
