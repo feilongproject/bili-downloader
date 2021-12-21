@@ -17,17 +17,22 @@ export async function PageDownloadVideo(cid: number, aid: number, dash: boolean,
     }).then(res => {
         return res.text()
     }).then(res => {
-        console.log(res)
+        //console.log(res)
         return JSON.parse(res).data
     })
 
-    console.log(videoJson)
+    //console.log(JSON.stringify(videoJson))
 
     var infoPage = `
         <span style="line-height: 100%;margin: 10px;">
             <div style="margin: 10px;">
                 <p>当前页面cid: ${cid}, aid: ${aid}</p>
                 <p>当前视频格式: ${videoJson.dash ? `当前格式会出现音视频分离现象，请谨慎下载` : `${videoJson.format}(bilibili已对当前下载格式进行速度限制)`}</p>
+                <details>
+                    <summary>当前使用api</summary>
+                    <p>dash: https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&fnval=16&fnver=0</p>
+                    <p>flv: https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&fnval=0&fnver=0&qn=${qn}</p>
+                </details>
         `
 
     var VideoSupportFormatsPage = `
