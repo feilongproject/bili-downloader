@@ -18,6 +18,8 @@ export async function PageInfoVideo(videoId: string): Promise<Response> {
     }).then(res => {
         return JSON.parse(res)
     })
+    if (videoInfoJson.code != 0)
+        throw new Error(`\n获取视频时发生错误\n错误信息: ${JSON.stringify(videoInfoJson)}`);
 
     var data = videoInfoJson.data
     //console.log(data)
