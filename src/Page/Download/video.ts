@@ -39,35 +39,27 @@ export async function PageDownloadVideo(cid: number, aid: number, dash: boolean,
         <table border="1">
             <tr>
                 <th>支持画质</th>
-                <th>是否需要登录</th>
-                <th>是否需要vip</th>
             </tr>
         `
     for (var i = 0; i < videoJson.support_formats.length; i++) {
         var SupportFormat = videoJson.support_formats[i]
         //console.log(SupportFormat)
-        if ((SupportFormat.quality == videoJson.quality) && (videoJson.type != "DASH")) VideoSupportFormatsPage += `
-                        <tr>
-                            <td><a href="/download?type=0&cid=${cid}&aid=${aid}&dash=0&qn=${SupportFormat.quality}"><b>${SupportFormat.new_description}<b></a></td>
-                            <td>${SupportFormat.need_login == true ? "是" : "否"}</td>
-                            <td>${SupportFormat.need_vip == true ? "是" : "否"}</td>
-                        </tr>`
-        else if (videoJson.type != "DASH") VideoSupportFormatsPage += `
+        if (videoJson.dash) VideoSupportFormatsPage += `
             <tr>
-                <td><a href="/download?type=0&cid=${cid}&aid=${aid}&dash=0&qn=${SupportFormat.quality}">${SupportFormat.new_description}</a></td>
-                <td>${SupportFormat.need_login == true ? "是" : "否"}</td>
-                <td>${SupportFormat.need_vip == true ? "是" : "否"}</td>
+                <td>${SupportFormat.new_description}</td>
+            </tr>`
+        else if (SupportFormat.quality == videoJson.quality) VideoSupportFormatsPage += `
+            <tr>
+                <td>${SupportFormat.new_description}</td>
             </tr>`
         else VideoSupportFormatsPage += `
-                        <tr>
-                            <td>${SupportFormat.new_description}</td>
-                            <td>${SupportFormat.need_login == true ? "是" : "否"}</td>
-                            <td>${SupportFormat.need_vip == true ? "是" : "否"}</td>
-                        </tr>`
+            <tr>
+                <td><a href="/download?type=0&cid=${cid}&aid=${aid}&dash=0&qn=${SupportFormat.quality}"><b>${SupportFormat.new_description}<b></a></td>
+            </tr>`
     }
+
     infoPage += VideoSupportFormatsPage + `
-                    </table>
-        `
+        </table>`
 
 
 
