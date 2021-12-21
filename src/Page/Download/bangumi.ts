@@ -37,8 +37,13 @@ export async function PageDownloadBangumi(cid: number, aid: number, dash: boolea
         var err = new Array
         for (var i = 0; i < text.length; i++) {
             try {
-                ret.push(JSON.parse(text[i]))
-                console.log(`\nerror0: ${text[i]}`)
+                var json = JSON.parse(text[i])
+                if (json.code == 0) {
+                    ret.push(json)
+                }
+                else {
+                    console.log(`error json: ${text[i]}`)
+                }
             } catch (error) {
                 err.push({ err: error, info: text[i] });
                 console.log(`${i}->err url: ${videoApiUrls[i]}\nerror: ${error}\nerror: ${text[i]}`)
