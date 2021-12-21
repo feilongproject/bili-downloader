@@ -27,7 +27,7 @@ export async function PageDownloadVideo(cid: number, aid: number, dash: boolean,
         <span style="line-height: 100%;margin: 10px;">
             <div style="margin: 10px;">
                 <p>当前页面cid: ${cid}, aid: ${aid}</p>
-                <p>当前视频格式: ${videoJson.format}${videoJson.format == "FLV" ? `(bilibili已对当前下载格式进行速度限制)` : `当前格式会出现音视频分离现象，请谨慎下载`}</p>
+                <p>当前视频格式: ${videoJson.dash ? `当前格式会出现音视频分离现象，请谨慎下载` : `${videoJson.format}(bilibili已对当前下载格式进行速度限制)`}</p>
         `
 
     var VideoSupportFormatsPage = `
@@ -66,7 +66,7 @@ export async function PageDownloadVideo(cid: number, aid: number, dash: boolean,
 
 
 
-    if (dash)
+    if (dash && videoJson.dash)
         infoPage += GetDashPage(videoJson.dash)
     else
         infoPage += GetFlvPage(videoJson.durl)
