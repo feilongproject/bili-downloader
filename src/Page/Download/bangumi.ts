@@ -53,7 +53,6 @@ export async function PageDownloadBangumi(cid: number, aid: number, dash: boolea
         return { ret, err }
     }).then(ret => {
         //console.log(`ret: ${JSON.stringify(ret)}`)
-
         var res = ret.ret, err = ret.err
         if (err[0]) {
             //console.log(`throwing err: ${err}`)
@@ -64,29 +63,19 @@ export async function PageDownloadBangumi(cid: number, aid: number, dash: boolea
         }
         else res = ret.ret
         console.log(res)
-
-        //console.log(`result: ${JSON.stringify(res[0].result)}`)
-        //console.log(`result: ${JSON.stringify(res[1].result)}`)
-        //console.log(`result: ${JSON.stringify(res[2].result)}`)
+        return res
+    }).then(res => {
         if (dash)
-            if (res[0].result.type == "DASH")
-                return res[0].result
-            else if (res[1].result.type == "DASH")
-                return res[1].result
-            else return res[2].result
-        else {
-            for (i = 0; i < res.length; i++) {
-                //console.log(`need qn:${qn},now qn:${res[i].result.quality}`)
-                if ((res[i].result.type == "FLV") && (res[i].result.quality == qn))
-                    return res[i].result
+            for (var i = 0; i < res.length; i++) {
+                if (res[i].result.type == "DASH")
+                    return res[0].result
             }
-            for (i = 0; i < res.length - 1; i++) {
-                if ((res[i].result.type == "FLV"))
-                    return res[i].result
-            }
-            return res[res.length].result
-
+        for (i = 0; i < res.length; i++) {
+            //console.log(`need qn:${qn},now qn:${res[i].result.quality}`)
+            if (res[i].result.quality == qn)
+                return res[i].result
         }
+        return res[0].result
     })
 
     //console.log(videoDownloadJson)
