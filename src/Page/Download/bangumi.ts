@@ -33,7 +33,7 @@ export async function PageDownloadBangumi(cid: number, aid: number, dash: boolea
         if (!ret[0]) throw new Error(`未从api获得任何信息！ret: ${ret}`);
         return ret
     }).then(text => {
-        var ret: any
+        var ret = new Array
         var err = new Array
         for (var i = 0; i < text.length; i++) {
             try {
@@ -47,10 +47,11 @@ export async function PageDownloadBangumi(cid: number, aid: number, dash: boolea
         //console.log(JSON.stringify(ret))
         return { ret, err }
     }).then(ret => {
-        console.log(`ret: ${JSON.stringify(ret)}`)
+        //console.log(`ret: ${JSON.stringify(ret)}`)
 
         var res = ret.ret, err = ret.err
-        if (ret.err) {
+        if (err[0]) {
+            //console.log(`throwing err: ${err}`)
             var errInfo = ""
             for (var i = 0; i < err.length; i++)
                 errInfo += `no.${i}\nerr url: ${videoApiUrls[i]}\nerror info: ${err[0].info}\n\n<hr>`
