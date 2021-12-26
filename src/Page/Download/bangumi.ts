@@ -17,14 +17,15 @@ export async function PageDownloadBangumi(cid: number, aid: number, dash: boolea
     else params = `?avid=${aid}&cid=${cid}&fnval=0&fnver=0&qn=${qn}`
     var videoApiUrls = new Array
     videoApiUrls.push(`https://bili.lli.cx/pgc/player/web/playurl/${params}`)
-    videoApiUrls.push(`https://mysr.ellpew.xyz/pgc/player/web/playurl/${params}`)
-    videoApiUrls.push(`https://bilibili.myhosts.ml/pgc/player/web/playurl/${params}}`)
+    //videoApiUrls.push(`https://mysr.ellpew.xyz/pgc/player/web/playurl/${params}`)
+    videoApiUrls.push(`https://bilibili.myhosts.ml/pgc/player/web/playurl/${params}`)
 
-    var P1 = fetch(videoApiUrls[0], { headers: cookieHeaders })
-    var P2 = fetch(videoApiUrls[1], { headers: cookieHeaders })
-    var P3 = fetch(videoApiUrls[2], { headers: cookieHeaders })
+    var fetchArr = new Array
+    for (var i = 0; i < videoApiUrls.length; i++) {
+        fetchArr.push(fetch(videoApiUrls[i], { headers: cookieHeaders }))
+    }
 
-    var videoJson = await Promise.all([P1, P2, P3]).then(async res => {
+    var videoJson = await Promise.all(fetchArr).then(async res => {
         var ret = []
         for (var i = 0; i < res.length; i++) {
             var body = await res[i].text()
@@ -40,13 +41,13 @@ export async function PageDownloadBangumi(cid: number, aid: number, dash: boolea
                 var json = JSON.parse(text[i])
                 if (json.code == 0) {
                     ret.push(json)
-                }
-                else {
-                    console.log(`error json: ${text[i]}`)
+                } else {
+                    err.push({ err: "返回值有误", info: text[i] })
+                    console.log(`${i}->err url:${videoApiUrls[i]}\nerror json: ${text[i]}`)
                 }
             } catch (error) {
                 err.push({ err: error, info: text[i] });
-                console.log(`${i}->err url: ${videoApiUrls[i]}\nerror: ${error}\nerror: ${text[i]}`)
+                console.log(`${i}->err url: ${videoApiUrls[i]}\nerror info: ${error}\nget res: ${/* text[i] */-1}`)
             }
         }
         //console.log(JSON.stringify(ret))
@@ -54,11 +55,11 @@ export async function PageDownloadBangumi(cid: number, aid: number, dash: boolea
     }).then(ret => {
         //console.log(`ret: ${JSON.stringify(ret)}`)
         var res = ret.ret, err = ret.err
-        if (err[0]) {
+        if (err[videoApiUrls.length - 1]) {
             //console.log(`throwing err: ${err}`)
             var errInfo = ""
             for (var i = 0; i < err.length; i++)
-                errInfo += `no.${i}\nerr url: ${videoApiUrls[i]}\nerror info: ${err[0].info}\n\n<hr>`
+                errInfo += `no.${i}\nerr url: ${videoApiUrls[i]}\nerror info: <code>${err[i].info}</code>\n\n<hr>`
             throw new Error(errInfo);
         }
         else res = ret.ret
@@ -68,7 +69,7 @@ export async function PageDownloadBangumi(cid: number, aid: number, dash: boolea
         if (dash)
             for (var i = 0; i < res.length; i++) {
                 if (res[i].result.type == "DASH")
-                    return res[0].result
+                    return res[i].result
             }
         for (i = 0; i < res.length; i++) {
             //console.log(`need qn:${qn},now qn:${res[i].result.quality}`)
