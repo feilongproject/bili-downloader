@@ -40,7 +40,7 @@ export function GetDashPage(dashs: dash) {
                 <!--<td>${VideoInfo.SegmentBase.Initialization}<br><br>${VideoInfo.SegmentBase.indexRange}</td>-->
                 <!--<td>${VideoInfo.codecid}</td>-->
             </tr>`
-        if (VideoInfo.backupUrl.length > 0)
+        if (VideoInfo.backupUrl)
             for (var j = 0; j < VideoInfo.backupUrl.length; j++) {
                 page += `
             <tr>
@@ -74,7 +74,7 @@ export function GetDashPage(dashs: dash) {
                 <td>${AudioInfo.codecs}</td>
                 <!--<td>${AudioInfo.SegmentBase.Initialization}<br><br>${AudioInfo.SegmentBase.indexRange}</td>-->
             </tr>`
-        if (AudioInfo.backupUrl.length > 0)
+        if (AudioInfo.backupUrl)
             for (var j = 0; j < AudioInfo.backupUrl.length; j++) {
                 page += `
             <tr>
