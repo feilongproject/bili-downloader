@@ -39,7 +39,7 @@ export async function PageInfoBangumi(videoId: string): Promise<Response> {
             </table>
             <hr>
             <table border="1">
-                <tr>  <th></th>   <th>分P标题</th>    <th>点击下载</th>    <th>CID</th>   </tr>
+                <tr>  <th></th>   <th>分P标题</th>    <th>下载方式</th>    <th>CID</th>   </tr>
         `
 
     var epData = videoInfoJson.episodes
@@ -51,10 +51,10 @@ export async function PageInfoBangumi(videoId: string): Promise<Response> {
                     <td>P${i + 1}</td>
                     <td>${epData[i].long_title}</td>
                     <td class="download">
-                        <a class="download-flv" target="_blank" href = "/download?type=1&cid=${cid}&aid=${aid}&dash=0">flv方式</a><br><br>
-                        <a class="download-dash" target="_blank" href = "/download?type=1&cid=${cid}&aid=${aid}&dash=1">dash方式</a>
+                        <a class="download-flv" target="_blank" href = "/download?type=1&cid=${cid}&aid=${aid}&dash=0">flv</a>
+                        <a class="download-dash" target="_blank" href = "/download?type=1&cid=${cid}&aid=${aid}&dash=1">dash</a>
                     </td>
-                    <td>${cid}<br></td>
+                    <td>${cid}</td>
                 </tr>
                 `
     }

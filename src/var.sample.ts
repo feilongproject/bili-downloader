@@ -80,8 +80,23 @@ export var PageIndex = `
             margin-right: 10px;
             flex-grow: 0.7;
         }
-        .goto-btn{
+
+        .goto-btn {
             margin-right:10px;
+        }
+
+        .download {
+            flex-direction: column;
+            display: flex;
+            align-items: center;
+        }
+
+        .download-flv {
+
+        }
+
+        .download-dash {
+
         }
     </style>
     <script>

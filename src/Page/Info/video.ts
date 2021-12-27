@@ -36,7 +36,7 @@ export async function PageInfoVideo(videoId: string): Promise<Response> {
             </table>
             <hr>
             <table border="1">
-                <tr>  <th></th>   <th>分P标题</th>    <th>点击下载</th>    <th>CID</th>   </tr>
+                <tr>  <th></th>   <th>分P标题</th>    <th>下载方式</th>    <th>CID</th>   </tr>
         `
 
     for (var i = 0; i < data.pages.length; i++) {
@@ -45,11 +45,11 @@ export async function PageInfoVideo(videoId: string): Promise<Response> {
                 <tr>
                     <td>P${i + 1}</td>
                     <td>${data.pages[i].part}</td>
-                    <td style="border-radius:10px;color:#00F;background-color: #fff;text-align: center;">
-                        <a target="_blank" href = "/download?type=0&cid=${cid}&aid=${data.aid}&dash=0">flv方式</a><br><br>
-                        <a target="_blank" href = "/download?type=0&cid=${cid}&aid=${data.aid}&dash=1">dash方式</a>
+                    <td class="download">
+                        <a class="download-flv" target="_blank" href = "/download?type=0&cid=${cid}&aid=${data.aid}&dash=0">flv</a>
+                        <a class="download-dash" target="_blank" href = "/download?type=0&cid=${cid}&aid=${data.aid}&dash=1">dash</a>
                     </td>
-                    <td>${cid}<br></td>
+                    <td>${cid}</td>
                 </tr>
                 `
     }
