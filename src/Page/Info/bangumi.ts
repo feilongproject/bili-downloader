@@ -50,9 +50,9 @@ export async function PageInfoBangumi(videoId: string): Promise<Response> {
                 <tr>
                     <td>P${i + 1}</td>
                     <td>${epData[i].long_title}</td>
-                    <td style="border-radius:10px;color:#00F;background-color: #fff;text-align: center;">
-                        <a target="_blank" href = "/download?type=1&cid=${cid}&aid=${aid}&dash=0">flv方式</a><br><br>
-                        <a target="_blank" href = "/download?type=1&cid=${cid}&aid=${aid}&dash=1">dash方式</a>
+                    <td class="download">
+                        <a class="download-flv" target="_blank" href = "/download?type=1&cid=${cid}&aid=${aid}&dash=0">flv方式</a><br><br>
+                        <a class="download-dash" target="_blank" href = "/download?type=1&cid=${cid}&aid=${aid}&dash=1">dash方式</a>
                     </td>
                     <td>${cid}<br></td>
                 </tr>

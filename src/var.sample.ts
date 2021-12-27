@@ -1,13 +1,19 @@
 //import {cookieHeaders} from '../../var'
 export const cookieHeaders = new Headers({
-    cookies: ""
+    cookies: "",
+    "accept": `text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9`,
+    "accept-language": `zh-CN,zh;q=0.9`,
+    "cache-control": `max-age=0`,
+    "sec-ch-ua": `" Not A;Brand";v="99", "Chromium";v="96", "Google Chrome";v="96"`,
+    "sec-ch-ua-platform": "Windows",
+    "user-agent": `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36`
 })
-
 
 
 export const htmlHeaders = new Headers({
     'Content-Type': 'text/html;charset=UTF-8'
 })
+
 
 export var PageIndex = `
 <!DOCTYPE html>
@@ -24,52 +30,64 @@ export var PageIndex = `
     <script src="//cdn.staticfile.org/jquery/1.12.3/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/gh/feilongproject/bili-downloader/layer/layer.js"></script>
     <style type="text/css">
-        .downloadbutton {
-            margin: 0px 5px 5px 5px;
-        }
-
-        html {
-            line-height: 1;
-            background-color: #00aaff;
+        body {
+            margin: 5% 20% auto 20%;
+            background-color: #0af;
+            display: flex;
+            flex-direction: column;
         }
 
         .header,
-        .info,
-        .howuse,
-        .todo,
+        .video-info,
         .tittle {
-            background-color: #0cf;
-            width: auto;
-            margin: auto auto;
-            box-shadow: 0 0 32px 0 #808080;
-            border-radius: 15px;
+            background-color: #0df;
+            margin: 10px 0 10px 0;
+            box-shadow: 1px 1px 50px rgb(0 0 0 / 30%);
+            border-radius: 5px;
+        }
+
+        .tittle {
+            text-align: center;
+        }
+        
+        .goto-input,
+        .goto-btn,
+        a.help {
+            display: block;
+            background-color: #fff;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 5px solid #0000;
+
+        }
+
+        .about {
+            flex-direction: row;
+            justify-content: space-evenly;
+            display: flex;
+            flex-wrap: wrap;
         }
 
         .input {
-            margin: 20px 20px;
-            padding: 10px 10px;
-            border: 1px solid #cdd;
-            border-radius: 20px;
-            width: 60%;
+            margin-bottom: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        .header,
-        .tittle {
-            text-align: center;
+        .goto-input {
+            margin-left: 10px;
+            margin-right: 10px;
+            flex-grow: 0.7;
         }
-
-        button {
-            text-align: center;
-            margin: 10px 10px 0px 0px;
-            padding: 10px 10px;
-            border: 1px solid #cdd;
-            border-radius: 20px;
+        .goto-btn{
+            margin-right:10px;
         }
     </style>
     <script>
-		console.log("欢迎使用bilibili视频下载助手")
-		console.log("%c 作者 -> 飞龙project ", "background:#000; color:#fff");
-		console.log("%c GitHub -> https://github.com/feilongproject/bili-downloader ", "background:#000; color:#fff");
+        console.log("欢迎使用bilibili视频下载助手")
+        console.log("%c 作者 -> 飞龙project ", "background:#000; color:#fff");
+        console.log("%c GitHub -> https://github.com/feilongproject/bili-downloader ", "background:#000; color:#fff");
         function HowToUse() {
             layer.open({
                 //type: 1,
@@ -111,7 +129,8 @@ export var PageIndex = `
                 shadeClose: true, //开启遮罩关闭
                 content: \`
                     <p>美化界面(样式还没统一)</p>
-                    <p>添加cookie，使能下载更高画质视频（更高画质视频可以通过dash模式下载，但会导致音视频分离）</p>\`
+                    <p>添加cookie，使能下载更高画质视频（更高画质视频可以通过dash模式下载，但会导致音视频分离）</p>
+                    \`
             });
         }
         function KownBug() {
@@ -141,36 +160,36 @@ export var PageIndex = `
     </script>
 </head>
 
-<body style="margin: 5% 20% auto 20%;">
+<body>
 
     <div class="tittle">
         <h1 style="padding: 20px;">bilibili视频下载助手</h1>
     </div>
-    <div class="header" style="text-align: center;">
-        <button type="button" onclick="HowToUse()">使用方法</button>
-        <button type="button" onclick="AboutMe()">关于</button>
-        <button type="button" onclick="Todo()">TODO</button>
-        <button type="button" onclick="KownBug()">已知问题</button>
+    <div class="header">
+        <div class="about">
+            <a class="help" onclick="HowToUse()">使用方法</a>
+            <a class="help" onclick="AboutMe()">关于</a>
+            <a class="help" onclick="Todo()">TODO</a>
+            <a class="help" onclick="KownBug()">已知问题</a>
+        </div>
         <hr noshade="noshade" style="height: 10px;">
-        <p>
-            <form name=fr>
-                <input name="video_choice" type="radio" checked>视频</input>
-            </form>
-            <input class="input" type="text" id="www" placeholder="输入AV/BV/EP/SS/MD号或视频链接" />
-            <input  type=button value=跳转 onclick="tiaozhuan()" />
-        </p>
-        <script type="text/javascript">
-            var tiaozhuan = function () {
-                if (!document.getElementById("www").value) layer.msg('请输入值');
-				else{
-					console.log("bangumi: "+document.getElementById("www").value)
-					document.location.href =  '/info/?id=' + document.getElementById("www").value;
-				}
-					
-            }
-        </script>
+
+        <div class="input">
+            <input class="goto-input" type="text" id="www" placeholder="输入AV/BV/EP/SS/MD号或视频链接" />
+            <a class="goto-btn" onclick="tiaozhuan()">跳转</a>
+            <script type="text/javascript">
+                var tiaozhuan = function () {
+                    if (!document.getElementById("www").value) layer.msg('请输入值');
+                    else {
+                        console.log("bangumi: " + document.getElementById("www").value)
+                        document.location.href = '/info/?id=' + document.getElementById("www").value;
+                    }
+
+                }
+            </script>
+        </div>
     </div>
-    <div class="info">
+    <div class="video-info">
         <!--INFOPAGE-->
         <!--DOWNLOADPAGE-->
     </div>
