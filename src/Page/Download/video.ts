@@ -6,8 +6,8 @@ import { GetFlvPage } from './GetFlv'
 export async function PageDownloadVideo(cid: number, aid: number, dash: boolean, qn: number): Promise<Response> {
 
     var params
-    if (dash) params = `?avid=${aid}&cid=${cid}&fnval=16&fnver=0`
-    else params = `?avid=${aid}&cid=${cid}&fnval=0&fnver=0&qn=${qn}`
+    if (dash) params = `?avid=${aid}&cid=${cid}&fnval=16&fnver=0&fourk=1`
+    else params = `?avid=${aid}&cid=${cid}&fnval=0&fnver=0&fourk=1&qn=${qn}`
     var videoApiUrl = `https://api.bilibili.com/x/player/playurl${params}`
 
     console.log(`fetching url: ${videoApiUrl}`)
