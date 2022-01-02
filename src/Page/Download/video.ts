@@ -18,7 +18,10 @@ export async function PageDownloadVideo(cid: number, aid: number, dash: boolean,
         return res.text()
     }).then(res => {
         //console.log(res)
-        return JSON.parse(res).data
+        var data = JSON.parse(res)
+        if (data.code != 0)
+            throw Error(res)
+        return data.data
     })
 
     //console.log(JSON.stringify(videoJson))
