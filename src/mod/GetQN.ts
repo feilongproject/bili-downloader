@@ -1,5 +1,5 @@
 export function GetQN(QN: number): string {
-    console.log(`QN: ${QN}`)
+    //console.log(`QN: ${QN}`)
     switch (QN) {
         case 6: return "240P 极速"
         case 16: return "360P 流畅"

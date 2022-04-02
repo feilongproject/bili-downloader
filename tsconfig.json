@@ -1,21 +1,36 @@
 {
-    "compilerOptions": {
-      "outDir": "./dist",
-      "module": "commonjs",
-      "target": "esnext",
-      "lib": ["esnext"],
-      "alwaysStrict": true,
-      "allowJs": true,
-      "strict": true,
-      "preserveConstEnums": true,
-      "moduleResolution": "node",
-      "sourceMap": true,
-      "esModuleInterop": true,
-      "types": [
-        "@cloudflare/workers-types",
-        "@types/service-worker-mock",
+  "compilerOptions": {
+    "target": "ES2018",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "lib": [
+      "ESNext",
+      "ESNext.AsyncIterable",
+      "DOM"
+    ],
+    "esModuleInterop": true,
+    "allowJs": true,
+    "sourceMap": true,
+    "strict": true,
+    "noEmit": true,
+    "experimentalDecorators": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": [
+        "./*"
+      ],
+      "@/*": [
+        "./*"
       ]
     },
-    "include": ["src"],
-    "exclude": ["node_modules", "dist", "test"]
-  }
+    "types": [
+      "@nuxt/types",
+      "@types/node"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    ".nuxt",
+    "dist"
+  ]
+}
