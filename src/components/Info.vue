@@ -88,7 +88,7 @@ export default Vue.extend({
 
     var idType = videoId.toString().toLowerCase().slice(0, 2);
     console.log(idType);
-    var reqUrlBase = `http://api.bilibili.com/x/web-interface/view?`;
+    var reqUrlBase = `https://api.bilibili.com/x/web-interface/view?`;
     var reqUrl: string | undefined;
     switch (idType) {
       case "av":
