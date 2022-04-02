@@ -39,8 +39,10 @@ export default Vue.extend({
       var videoId = this.videoId;
       var pattern = /(av)\d{1,}|(bv)\w*|(ss)\d{1,}|(ep)\d{1,}|(md)\d{1,}/i;
       var id = pattern.exec(videoId)?.[0];
-      if (id) console.log(id);
-      document.location.href = "/info/?id=" + this.videoId;
+      if (id) {
+        console.log(id);
+        document.location.href = "/info/?id=" + id;
+      }
     },
   },
 });
