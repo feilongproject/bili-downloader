@@ -22,26 +22,37 @@
 </template>
 
 
-<script >
+<script lang="ts">
 import Vue from "vue";
 export default Vue.extend({
   data: function () {
     return { videoId: "" };
   },
   methods: {
-    exe(e) {
-      var videoId = e.currentTarget.value;
-      var pattern = /(av)\d{1,}|(bv)\w*|(ss)\d{1,}|(ep)\d{1,}|(md)\d{1,}/i;
-      var id = pattern.exec(videoId)?.[0];
-      if (id) console.log(id);
+    exe(e: Event) {
+      var videoId = (<HTMLInputElement>e.currentTarget).value;
+      //console.log(videoId);
+
+      var patternVideo = /(av)\d{1,}|(bv)\w*/i;
+      var idVideo = patternVideo.exec(videoId)?.[0];
+      var patternBangumi = /(ss)\d{1,}|(ep)\d{1,}/i;
+      var idBangumi = patternBangumi.exec(videoId)?.[0];
+
+      if (idVideo) console.log(idVideo);
+      if (idBangumi) console.log(idBangumi);
     },
     turn() {
       var videoId = this.videoId;
-      var pattern = /(av)\d{1,}|(bv)\w*|(ss)\d{1,}|(ep)\d{1,}|(md)\d{1,}/i;
-      var id = pattern.exec(videoId)?.[0];
-      if (id) {
-        console.log(id);
-        document.location.href = "/info/?id=" + id;
+      var patternVideo = /(av)\d{1,}|(bv)\w*/i;
+      var idVideo = patternVideo.exec(videoId)?.[0];
+      var patternBangumi = /(ss)\d{1,}|(ep)\d{1,}/i;
+      var idBangumi = patternBangumi.exec(videoId)?.[0];
+      //var pattern = /(av)\d{1,}|(bv)\w*|(ss)\d{1,}|(ep)\d{1,}|(md)\d{1,}/i;
+      //var id = pattern.exec(videoId)?.[0];
+      if (idVideo) {
+        document.location.href = "/info/video?id=" + idVideo;
+      } else if (idBangumi) {
+        document.location.href = "/info/bangumi?id=" + idBangumi;
       }
     },
   },

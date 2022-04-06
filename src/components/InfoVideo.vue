@@ -78,7 +78,6 @@ export default Vue.extend({
       desc: "Loading...",
       part: "Loading...",
       pic: "Loading...",
-      message: "Loading...",
       videoList: [{}],
     };
   },

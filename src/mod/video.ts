@@ -1,4 +1,5 @@
 import { VideoPlayInfo } from "../type";
+import { CustomConfig } from '../config'
 
 /* import { GetDash } from './GetDash'
 import { GetFlv } from './GetFlv'
@@ -8,7 +9,7 @@ export async function DownloadVideo(cid: number, aid: number, dash: boolean, qn:
     var params;
     if (dash) params = `?avid=${aid}&cid=${cid}&fnval=16&fnver=0&fourk=1`;
     else params = `?avid=${aid}&cid=${cid}&fnval=0&fnver=0&fourk=1&qn=${qn}`;
-    var videoApiUrl = `https://biliapi.feilongproject.com/x/player/playurl${params}`;
+    var videoApiUrl = `${CustomConfig.ApiProxyUrl}/x/player/playurl${params}`;
 
     console.log(`fetching url: ${videoApiUrl}`);
 

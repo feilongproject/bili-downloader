@@ -2,6 +2,6 @@
   <div>
     <Title />
     <Turn />
-    <Info />
+    <DownloadBangumi />
   </div>
 </template>
