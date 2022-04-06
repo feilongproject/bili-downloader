@@ -1,6 +1,6 @@
 {
   "name": "bili-downloader",
-  "version": "3.0.2",
+  "version": "3.1.2",
   "private": true,
   "scripts": {
     "dev": "nuxt -H 0.0.0.0",

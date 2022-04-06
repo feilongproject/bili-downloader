@@ -1,3 +1,1 @@
-export var CustomConfig = {
-    ApiProxyUrl: ""
-}
+export var CustomConfig = { ApiProxyUrl: "https://biliapi.feilongproject.com" }
