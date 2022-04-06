@@ -79,7 +79,7 @@ export default Vue.extend({
 
     var idType = bangumiId.toString().toLowerCase().slice(0, 2);
     console.log(idType);
-    var reqUrlBase = `${CustomConfig.ApiProxyUrl}/pgc/view/web/season?`;
+    var reqUrlBase = `${CustomConfig().ApiProxyUrl}/pgc/view/web/season?`;
     var reqUrl: string | undefined;
     switch (idType) {
       case "ss":

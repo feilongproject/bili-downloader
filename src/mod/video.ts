@@ -9,7 +9,7 @@ export async function DownloadVideo(cid: number, aid: number, dash: boolean, qn:
     var params;
     if (dash) params = `?avid=${aid}&cid=${cid}&fnval=16&fnver=0&fourk=1`;
     else params = `?avid=${aid}&cid=${cid}&fnval=0&fnver=0&fourk=1&qn=${qn}`;
-    var videoApiUrl = `${CustomConfig.ApiProxyUrl}/x/player/playurl${params}`;
+    var videoApiUrl = `${CustomConfig().ApiProxyUrl}/x/player/playurl${params}`;
 
     console.log(`fetching url: ${videoApiUrl}`);
 
