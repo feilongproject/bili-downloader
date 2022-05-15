@@ -42,10 +42,15 @@
             v-for="(item, index) in videoList"
             :key="index"
             type="primary"
-            @click="downloadVideo(aid, item.cid)"
             :value="`${item.duration}s`"
           >
-            <el-button type="primary" size="small"> {{ item.part }}</el-button>
+            <el-button
+              @click="downloadVideo(aid, item.cid)"
+              type="primary"
+              size="small"
+            >
+              {{ item.part }}</el-button
+            >
           </el-badge>
         </div>
       </el-descriptions-item>
