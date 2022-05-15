@@ -50,11 +50,11 @@
         <!-- <el-table-column prop="sar" label="单个像素宽高比"> </el-table-column> -->
         <el-table-column prop="url" label="link">
           <template slot-scope="scope">
-            <th v-for="(url, iv) in scope.row.url" :key="iv">
+            <div v-for="(url, iv) in scope.row.url" :key="iv">
               <el-link type="primary" icon="el-icon-download" :href="url">
                 link{{ iv }}
               </el-link>
-            </th>
+            </div>
           </template>
         </el-table-column>
       </el-table>
@@ -75,11 +75,11 @@
         <el-table-column prop="codecs" label="编码类型"> </el-table-column>
         <el-table-column prop="url" label="link">
           <template slot-scope="scope">
-            <th v-for="(url, iv) in scope.row.url" :key="iv">
+            <div v-for="(url, iv) in scope.row.url" :key="iv">
               <el-link type="primary" icon="el-icon-download" :href="url">
                 link{{ iv }}
               </el-link>
-            </th>
+            </div>
           </template>
         </el-table-column>
       </el-table>
