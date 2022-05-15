@@ -1,6 +1,5 @@
 <template>
-  <div>
+  <el-container direction="vertical">
     <Title />
-    <Turn />
-  </div>
+  </el-container>
 </template>

@@ -1,76 +1,62 @@
 <template>
-  <div class="video-info" style="display: flex">
-    <span style="line-height: 100%; margin: 10px 10px">
-      <table border="1">
-        <tr>
-          <th>番剧信息</th>
-          <th>值</th>
-        </tr>
-        <tr>
-          <td>标题</td>
-          <td>{{ title }}</td>
-        </tr>
-        <tr>
-          <td>简介</td>
-          <td>{{ desc }}</td>
-        </tr>
-        <tr>
-          <td>分P</td>
-          <td>{{ part }}P</td>
-        </tr>
-        <tr>
-          <td>封面</td>
-          <td><a :href="pic">链接</a></td>
-        </tr>
-      </table>
-      <hr />
-      <table border="1">
-        <tr>
-          <th>短标题</th>
-          <th>长标题</th>
-          <th>CID</th>
-          <th>付费信息</th>
-          <th>下载方式</th>
-        </tr>
-        <tr v-for="(item, index) in bangumiList" :key="index">
-          <th>{{ item.title }}</th>
-          <th>{{ item.long_title }}</th>
-          <th>{{ item.cid }}</th>
-          <th>{{ item.badge }}</th>
-          <td class="download">
-            <a
-              class="download-flv"
-              target="_blank"
-              :href="`/download/bangumi?type=0&cid=${item.cid}&aid=${item.aid}&dash=0`"
-              >flv</a
+  <el-main class="main">
+    <el-descriptions
+      :title="title"
+      :column="2"
+      border
+      style="width: fit-content"
+      :labelStyle="{ background: '#0df', color: '#000' }"
+      :contentStyle="{ background: '#0df', color: '#000' }"
+    >
+      <el-descriptions-item label="封面" span="2">
+        <a :href="pic" target="_blank">链接</a>
+      </el-descriptions-item>
+      <el-descriptions-item label="简介" span="2" style="white-sapce: pre-wrap">
+        <span v-html="desc"></span>
+      </el-descriptions-item>
+      <el-descriptions-item label="分P标题">
+        <el-switch
+          v-model="downloadType"
+          active-color="#000"
+          inactive-color="#000"
+          active-text="flv格式"
+          inactive-text="dash格式"
+          @change="typeChange"
+        >
+        </el-switch>
+        <hr />
+        <div style="display: flex; flex-wrap: wrap">
+          <el-badge
+            v-for="(item, index) in bangumiList"
+            :key="index"
+            :value="item.badge"
+          >
+            <el-button
+              @click="downloadVideo(item.aid, item.cid)"
+              type="primary"
             >
-            <a
-              class="download-dash"
-              target="_blank"
-              :href="`/download/bangumi?type=0&cid=${item.cid}&aid=${item.aid}&dash=1`"
-              >dash</a
-            >
-          </td>
-        </tr>
-      </table>
-    </span>
-  </div>
+              {{ item.title }}:{{ item.long_title }}
+            </el-button>
+          </el-badge>
+        </div>
+      </el-descriptions-item>
+    </el-descriptions>
+  </el-main>
 </template>
 
 
 <script lang="ts">
 import Vue from "vue";
 import { CustomConfig } from "../config";
-import { BangumiInfo } from "../type";
 
 export default Vue.extend({
   data: function () {
     return {
       title: "Loading...",
       desc: "Loading...",
-      part: "Loading...",
       pic: "Loading...",
-      bangumiList: [{}],
+      bangumiList: Array(),
+      downloadType: false,
     };
   },
   mounted: async function () {
@@ -78,7 +64,7 @@ export default Vue.extend({
     console.log(bangumiId);
 
     var idType = bangumiId.toString().toLowerCase().slice(0, 2);
-    console.log(idType);
+    //console.log(idType);
     var reqUrlBase = `${CustomConfig().ApiProxyUrl}/pgc/view/web/season?`;
     var reqUrl: string | undefined;
     switch (idType) {
@@ -98,9 +84,9 @@ export default Vue.extend({
             return data;
           });
 
+        console.log(res.result.episodes);
         this.title = res.result.title;
-        this.desc = res.result.evaluate;
-        this.part = res.result.episodes.length.toString();
+        this.desc = res.result.evaluate.replaceAll("\n", "<br>");
         this.pic = res.result.cover;
         this.bangumiList = res.result.episodes;
 
@@ -109,7 +95,19 @@ export default Vue.extend({
         break;
     }
   },
-  methods: {},
+  methods: {
+    typeChange(a: boolean) {
+      console.log(a);
+    },
+    downloadVideo(aid: number, cid: number) {
+      console.log(aid, cid);
+      if (this.downloadType) {
+        location.href = `/download/bangumi?aid=${aid}&cid=${cid}&dash=0`;
+      } else {
+        location.href = `/download/bangumi?aid=${aid}&cid=${cid}&dash=1`;
+      }
+    },
+  },
 });
 </script>
 

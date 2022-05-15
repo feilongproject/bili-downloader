@@ -1,7 +1,6 @@
 <template>
-  <div>
+  <el-container direction="vertical">
     <Title />
-    <Turn />
     <DownloadBangumi />
-  </div>
+  </el-container>
 </template>

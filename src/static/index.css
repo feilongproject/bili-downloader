@@ -1,60 +1,37 @@
-
 body {
-  margin: 5% 20% auto 20%;
   background-color: #0af;
+}
+
+.main {
+  background-color: #0df;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
   display: flex;
   flex-direction: column;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 20px 50px;
 }
 
-.header,
-.video-info,
-.tittle {
+.el-tag {
+  margin: 1px 1px 1px 1px;
+}
+
+.el-badge{
+  margin-right: 20px;
+}
+
+.el-badge__content {
+  z-index: 1;
+}
+
+.title {
   background-color: #0df;
-  margin: 10px 0 10px 0;
   box-shadow: 1px 1px 50px rgb(0 0 0 / 30%);
   border-radius: 5px;
-}
-
-.tittle {
   text-align: center;
 }
 
-.goto-input,
-.goto-btn,
-a.help {
-  display: block;
-  background-color: #fff;
-  margin-top: 10px;
-  border-radius: 5px;
-  border: 5px solid #0000;
-}
-
-.about {
-  flex-direction: row;
-  justify-content: space-evenly;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.input {
-  margin-bottom: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.goto-input {
-  margin-left: 10px;
-  margin-right: 10px;
-  flex-grow: 0.7;
-}
-
-.goto-btn {
-  margin-right: 10px;
-}
-
-.download {
-  flex-direction: column;
-  display: flex;
-  align-items: center;
+div.el-switch span.el-switch__label.is-active {
+  color: #0000ff;
 }

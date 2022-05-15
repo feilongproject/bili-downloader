@@ -22,10 +22,13 @@ export default {
     script: [{ src: "/index.js" }],
   },
 
-  css: ["static/index.css"],
+  css: [
+    "static/index.css",
+    "element-ui/lib/theme-chalk/index.css",
+  ],
 
 
-  plugins: [],
+  plugins: ["plugins/element-ui"],
 
   components: true,
 
@@ -36,6 +39,5 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [],
 
-  // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {}
+  vendor: ["element-ui"]
 }

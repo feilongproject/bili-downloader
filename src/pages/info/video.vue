@@ -1,7 +1,6 @@
 <template>
-  <div>
+  <el-container direction="vertical">
     <Title />
-    <Turn />
     <InfoVideo />
-  </div>
+  </el-container>
 </template>
