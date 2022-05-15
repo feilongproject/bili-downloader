@@ -47,10 +47,9 @@
       </el-table-column>
     </el-table>
 
-    <div>
+    <div v-if="dash == 1">
       <h1>视频流信息</h1>
       <el-table
-        v-if="dash == 1"
         :data="playUrlDash.video"
         style="width: 100%"
         :cell-style="theme"
@@ -82,7 +81,6 @@
 
       <h1>音频流信息</h1>
       <el-table
-        v-if="dash == 1"
         :data="playUrlDash.audio"
         style="width: 100%"
         :cell-style="theme"
